@@ -1,0 +1,19 @@
+::ng-deep table{  
+thead{
+    tr{
+        th{
+            &:last-child{ width: 80px;}
+        }
+    }
+}
+    tr{
+        td{
+            // &:nth-child(2){ text-transform: capitalize;}
+            // &:nth-child(3){ text-transform: capitalize;}
+        }
+    }
+}
+
+::ng-deep body{
+    overflow-y: hidden;
+  }

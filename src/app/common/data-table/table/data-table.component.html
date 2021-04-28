@@ -1,0 +1,87 @@
+<!-- 
+<div class="container">
+  <app-data-table-filter [tableData]="dataSource" ></app-data-table-filter>
+</div> -->
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(columnHeader)">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnHeader[tableData]|titlecase}} </th>
+        <td mat-cell *matCellDef="let element">
+            <!-- <div *ngIf="isLength(element[tableData])"> -->
+            <span *ngIf="isArray(element[tableData]); else elseBlock " class="d-flex">  
+
+          <div *ngFor="let action of element[tableData];let i = index" >
+            <button
+              matTooltip="{{action}}" 
+              matTooltipClass="custom-tooltip-style"
+              mat-icon-button 
+              (click)="Opendailogbox(element,action)" 
+              [disabled]="
+                ((element.Status=='Queued' || element.Status=='Processing' || element.Status=='Completed') && columnHeader.Status=='Status') || 
+                (element.popupFrom=='UserAndAccessComponent' &&  element.emailAddress == loggedInClientEmail  ) || 
+                (element.popupFrom=='UserAndAccessComponent' &&  element.ssoEnabled == true &&  action == 'Reset' ) || 
+                (element.popupFrom=='LeadangeluserlistComponent' && element.emailAddress == loggedInAdnimEmail  )||
+                (Clientrole=='ReadOnly' && 
+                (element.popupFrom != 'leadDetailReport' && element.popupFrom != 'accountCoverageReport' && element.popupFrom != 'duplicateAccountReport' 
+                && element.popupFrom != 'leadsMatchedWithAccount' && element.popupFrom != 'leadsMatchedWithoutAccount' && 
+                element.popupFrom != 'leadUploadErrorReport' && element.popupFrom != 'accountUploadErrorReport' && 
+                element.popupFrom != 'routingErrorReport' && element.popupFrom != 'leadSalesTeam'))"
+                >
+              <mat-icon 
+              [ngClass]="
+              ((element.Status=='Queued' || element.Status=='Processing' || element.Status=='Completed') && columnHeader.Status=='Status') || 
+              (element.popupFrom=='UserAndAccessComponent' &&  element.emailAddress == loggedInClientEmail  ) || 
+              (element.popupFrom=='UserAndAccessComponent' &&  element.ssoEnabled == true &&  action == 'Reset' ) || 
+              (element.popupFrom=='LeadangeluserlistComponent'  && element.emailAddress == loggedInAdnimEmail  )|| 
+              (Clientrole=='ReadOnly' && 
+              (element.popupFrom != 'leadDetailReport' && element.popupFrom != 'accountCoverageReport' && element.popupFrom != 'duplicateAccountReport' 
+              && element.popupFrom != 'leadsMatchedWithAccount' && element.popupFrom != 'leadsMatchedWithoutAccount' && 
+              element.popupFrom != 'leadUploadErrorReport' && element.popupFrom != 'accountUploadErrorReport' && 
+              element.popupFrom != 'routingErrorReport' && element.popupFrom != 'leadSalesTeam'))  ?'actionitem-disable-'+action:'actionitem-'+action
+               "
+              >{{element.actionIcon[i]}}</mat-icon>
+            </button>
+          </div>
+      </span>
+            <!-- </div> -->
+            <!-- <div *ngIf="!isLength(element[tableData])">
+        <span *ngIf="isArray(element[tableData]); else elseBlock">  
+          <button color="orange" mat-stroked-button color="primary" (click)="Opendailogbox(element,element[tableData])">{{element[tableData]}}  </button>
+        </span>
+      </div> -->
+            <ng-template #elseBlock>
+                <div [ngClass]="(element[tableData]=='Active' && columnHeader[tableData]=='Status')? ('enable') : ((element[tableData]=='Inactive' && columnHeader[tableData]=='Status')?( 'disable') : (element[tableData]=='Queued' && columnHeader[tableData]=='Status')? ('queued') : ((element[tableData]=='Draft' && columnHeader[tableData]=='Status')?( 'disable') : (element[tableData]=='Completed' && columnHeader[tableData]=='Status'?('enable'):element[tableData]=='Processing' && columnHeader[tableData]=='Status'?( 'processing'):null)))">
+                    {{
+                      (element.popupFrom=='overview')?((columnHeader[tableData]=='Updated' && element[tableData]!='')?(element[tableData]| date: 'medium':'UTC')+' UTC':(element[tableData])):
+                      (element.popupFrom=='netNewAccReport')?((columnHeader[tableData]=='Created Ts'  && element[tableData]!='' )?(element[tableData]| date: 'medium':'UTC')+' UTC':(element[tableData])):
+                      (element.popupFrom=='CrmdatarefreshComponent')?(((columnHeader[tableData]=='Createdts'||columnHeader[tableData]=='Startedts' ||columnHeader[tableData]=='Completedts')  && element[tableData]!='' )?(element[tableData]| date: 'medium':'UTC')+' UTC':(element[tableData])):
+                      (element.popupFrom=='srAccMapping')?((columnHeader[tableData]=='Updated'   && element[tableData]!='')?(element[tableData]| date: 'medium':'UTC')+' UTC':(element[tableData])):element[tableData]
+                    }}
+                </div>
+                
+            </ng-template>
+           
+        </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader);sticky:true"></tr>
+    <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader);"></tr>
+</table>
+<mat-paginator 
+    #paginator
+    class="mat-paginator-sticky"  
+    [pageSize]="pageSize"
+    [ngClass]="{'paginatorLine': this.dataSource.filteredData.length === 0}"
+    [length]="pageLength" 
+    [pageSizeOptions]="[10,25,50,100]"  
+    [showFirstLastButtons] = showFandLBtn     
+    (page)="getPaginatorData($event)">
+</mat-paginator>
+
+<app-custom-notification
+    [Notification] = "Notification"
+></app-custom-notification>
+
+
+

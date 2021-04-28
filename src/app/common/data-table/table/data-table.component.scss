@@ -1,0 +1,28 @@
+.actionitem-Edit{color: #00587f !important;}
+.actionitem-Setting{color: #ff8d05 !important;}
+.actionitem-Execute{color: #28a745 !important;}
+.actionitem-Update{color: #00587f !important;}
+.actionitem-Delete{color: #dc3545!important;}
+.actionitem-Link{color: #dc3545!important;}
+.actionitem-Save{ color:#28a745!important;}
+.actionitem-Reset{color:#28a745!important;}
+
+.actionitem-disable-Edit{color: #00597f36 !important;}
+.actionitem-disable-Execute{color: #28a7463a !important;}
+.actionitem-disable-Delete{color: #dc354636!important;}
+
+::ng-deep table tbody tr:nth-child(even) {
+    background: #efefef;
+}  
+
+.mat-table-sticky{ top: -1px !important; background:#15455b;}
+.tableActionButton span{
+    display: flex;
+}
+
+::ng-deep .paginatorLine{
+    padding-top:60px;
+    .mat-paginator-outer-container{
+        border-top:1px solid #e0e0e0;
+    }
+}

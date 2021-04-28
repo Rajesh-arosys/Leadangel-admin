@@ -1,0 +1,29 @@
+<mat-toolbar class="toolbarheader">
+  <h4>CRM Data Refresh Details</h4>
+   <span class="spacer"></span>
+  <button mat-button mat-raised-button color="primary" (click)="addCrmDailog('','add_crm_dialog_users','CrmdatarefreshComponent')">Add</button>
+
+  <app-data-table-filter 
+  [tableData]="dataForFiter" 
+  (filteredData)=tableFilterRec($event) 
+  [completed]="isCompleted"
+  ></app-data-table-filter>
+ </mat-toolbar>
+
+ <div class="container-fluid mt-3 mb-5 adminTable position-relative">
+
+  <app-data-table 
+  [tableData]    = "dataForTable"
+  [columnHeader] = "columnHeader"
+  (isUpdated)    =  dataTableRec($event)
+></app-data-table>
+
+<div *ngIf="this.noRecordsFound" class="norecordsfound">
+
+  <mat-icon class="text-danger">warning</mat-icon>No Record Found
+
+</div>
+
+</div>
+<app-progress-spinner class="spinner-position" [mode]="ProgressSpinnermode" *ngIf="this.displayProgressSpinner"></app-progress-spinner>
+<app-custom-notification [Notification]="Notification"></app-custom-notification>

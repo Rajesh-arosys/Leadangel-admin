@@ -1,0 +1,14 @@
+<div class="comman-filter">  
+<input #filterName [(ngModel)]="keyword"   (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+<mat-icon>filter_alt</mat-icon>
+    <button 
+        type="button" 
+        mat-icon-button 
+        class="inputClearCross" 
+        (click)="clearFilterSearch()" 
+        [class.d-none]="filterName.value==''"
+        [class.d-block]="filterName.value!=''"
+    >        
+        <mat-icon>clear</mat-icon>
+    </button>
+</div>

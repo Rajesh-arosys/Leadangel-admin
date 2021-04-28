@@ -1,0 +1,23 @@
+
+::ng-deep .adminTable app-data-table table{
+
+    thead{
+        tr{
+            th{
+                &:nth-child(7){ width: 140px;}
+            }
+        }
+    }
+    tbody{
+        tr{
+            td{
+                min-width: auto!important;
+            }
+        }
+    }
+}
+
+::ng-deep body{
+    overflow-y: hidden;
+}
+

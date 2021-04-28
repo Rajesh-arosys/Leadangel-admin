@@ -1,0 +1,15 @@
+<!-- <p>
+  download-csv works!
+</p> -->
+
+
+<button mat-raised-button color="primary"  [class.downloadButtonRight]="this.loader == true" [disabled]="disableDwnld">
+  <mat-icon>{{iconName}}</mat-icon> {{buttonName}}
+  <span class="downloadButtonSpinner" *ngIf="this.loader">
+    <app-progress-spinner class="spinner-position" [mode]="ProgressSpinnermode" *ngIf="this.displayProgressSpinner">
+    </app-progress-spinner>
+  </span>
+</button>
+
+
+<!-- {{disableDwnld}} -->

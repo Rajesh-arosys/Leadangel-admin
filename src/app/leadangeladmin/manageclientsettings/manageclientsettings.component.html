@@ -1,0 +1,33 @@
+<mat-toolbar class="toolbarheader">
+  <h4>Manage Client Setting</h4>
+  <span class="spacer"></span>
+  <app-download-csv 
+    [csvData]      = "csvData"
+    [csvHeader]    = "csvHeader"
+    [title]        = "title"
+    [buttonName]   = "buttonName"
+    [fileName]      = "fileName"
+    [isDownloaded]  = "isDownloaded"
+    (click)         = "downloadAllSettings()"
+    [disableDwnld]  = "disableDwnld"
+    [loader]        = "loader"
+  ></app-download-csv>
+       
+  <app-data-table-filter 
+   [tableData]="dataForFiter"   
+   [completed]="isCompleted"
+   (filteredData)=tableFilterRec($event) 
+   ></app-data-table-filter>
+</mat-toolbar>
+    
+  <div class="container-fluid mt-3 mb-5 position-relative">
+    <app-data-table 
+      [tableData]    = "dataForTable"
+      [columnHeader] = "columnHeader"
+      (isUpdated)    =  dataTableRec($event)
+    ></app-data-table>
+    <div *ngIf="this.noRecordsFound" class="norecordsfound ">
+      <mat-icon class="text-danger">warning</mat-icon>No Record Found
+    </div>   
+  </div>
+<app-progress-spinner class="spinner-position" [mode]="ProgressSpinnermode" *ngIf="this.displayProgressSpinner"></app-progress-spinner>

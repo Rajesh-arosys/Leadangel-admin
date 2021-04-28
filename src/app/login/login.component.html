@@ -1,0 +1,111 @@
+<div class="logout-warning-message justify-content-center" *ngIf="showTimeoutMsg"> 
+  <div class="centernotify">
+  <span class="icon"><mat-icon>notification_important</mat-icon></span>
+  <span class="pl-1">{{timedOutMsg}}</span>
+</div>
+</div>
+<!-- <div class="logout-warning-message1 justify-content-center"> 
+  <div class="centernotify">
+    <span class="icon"><mat-icon>notification_important</mat-icon></span>
+    <span class="pl-1">This site is under maintenance and will be back by April 24, 8:00 AM Pacific.</span>
+  </div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row logo">
+    <img src="../../assets/img/leadangel-logo.png" alt="">
+  </div>
+  <div class="loginPanel shadow">
+    <div class="row loginCardPadding">
+      <div class="col-md-6 verticalSeprator">
+        <div class="innerLoginPanelLeft">
+          <div class="text-center pb-4">
+            <i class="material-icons la-theme-color iconLogin">account_circle</i> 
+            <div>
+              Login with Email and Password
+            </div>
+          </div>  
+          <form class="" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <mat-form-field appearance="outline">
+              <mat-label>Client ID</mat-label>
+                    <input matInput required formControlName="clientID" name="clientID" type="text" >
+              <mat-icon matSuffix color="grey">portrait</mat-icon>
+                   <!-- (keydown)   = "countKeys($event)" -->
+            </mat-form-field>
+            <mat-form-field appearance="outline"> 
+              <mat-label >Email ID</mat-label>
+              <input matInput required formControlName="emailId" name="emailId">
+              <mat-icon color="grey" matSuffix>email</mat-icon>
+              
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput required type="password" formControlName="password" name="password">
+              <mat-icon matSuffix color="grey">vpn_key</mat-icon>
+            </mat-form-field>
+            <mat-checkbox  color="accent" name="rememberMe" formControlName="rememberMe">Remember Me!</mat-checkbox>
+
+            <div class="row mt-1">
+              <div class="col-6">
+                <div class="spinner-button">
+                  <button mat-raised-button class="btn-block" [disabled]="loginForm.invalid" color="primary" type="submit">Login</button>
+                  <!-- <mat-spinner  strokeWidth="3" [diameter]="20"></mat-spinner> -->
+                </div>
+              </div>
+              <div class="col-6 text-right "> 
+                <button mat-button type="button" (click)="forgotpass('forgetPassClient')" class="left-margin">  
+                  Forgot Password ?
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="horizontalSeprator hide-in-desktop">
+          <span class="or" >OR</span>
+        </div>
+        <div class="innerLoginPanelRight">
+          <div class="text-center pb-4">
+            <i class="material-icons la-theme-color iconLogin">account_circle</i> 
+            <div>
+             Login with SSO
+            </div>
+          </div>  
+          <form class="" [formGroup]="ssologinForm" (ngSubmit)="ssoOnLogin()">
+            <mat-form-field appearance="outline">
+              <mat-label>Client ID</mat-label>
+              <input matInput type="text" required formControlName="ssoClientID" name="clientID">
+              <mat-icon matSuffix color="grey">portrait</mat-icon>
+              
+            </mat-form-field>
+
+            <div class="row mt-1">
+              <div class="col-6">
+                <div class="spinner-button">
+                  <button mat-raised-button class="btn-block" [disabled]="ssologinForm.invalid" color="primary" type="submit">Login</button>
+                  <!-- <mat-spinner  strokeWidth="3" [diameter]="20"></mat-spinner> -->
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="visitLink">
+      Visit &nbsp; 
+      <a href="https://www.leadangel.com"
+        target="_blank">Leadangel.com
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<app-custom-notification [Notification] = "Notification"></app-custom-notification>

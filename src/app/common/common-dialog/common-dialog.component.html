@@ -1,0 +1,134 @@
+<div *ngIf="data.dialogtype == 'NEW_OBJECT' ||data.dialogtype == 'NEW_FOLDER'">
+<div class="header dailog-header">
+    <h1 mat-dialog-title>{{ data.title  }}</h1>
+</div>
+
+<mat-dialog-content>
+    
+    <!-- <p class="dialog-message">{{ data.message }}</p> -->
+    <div class="form-group mt-3">
+        <label class="d-flex justify-content-between"><span>Name</span> <span>{{inputLength}}/50</span></label>
+    <input id="menuname" (input)='countName("NEW_OBJ_INP")' type="text" [maxlength]="50" autocomplete="off" class=" form-control" name="menuName"  [(ngModel)]="this.menuName"  [ngClass]="{'is-invalid':inputError}" placeholder="Enter Name"/>
+    
+</div>
+<div class="form-group">
+    <label class="d-flex justify-content-between"><span>Description</span> <span>{{descLength}}/100</span></label>
+  
+<textarea id="menudesc"  class="form-control" [(ngModel)]="this.menuDesc" [maxlength]="100" rows="4" autocomplete="off" (input)='countDesc("NEW_OBJ_TXT")' [ngClass]="{'is-invalid':descError}" placeholder="Enter Description"></textarea>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="mt-2">
+    <button mat-raised-button  (click)="cancel()">{{ data.cancelText }}</button>
+    <button mat-raised-button color="primary"  type="submit" (click)="confirm()"    [disabled]='disableSave'>{{ data.confirmText }}</button>
+</mat-dialog-actions>
+
+</div>
+
+<div *ngIf="data.dialogtype == 'DELETE'">
+   
+    <mat-dialog-content class=" text-center">
+        <p class="dialog-message">{{ data.message }}</p>
+        <p class="dialog-message">{{ data.title }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button  (click)="cancel()">{{ data.cancelText }}</button>
+        <button mat-raised-button color="warn" type="submit"  (click)="confirm()">{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+
+</div>
+
+<div *ngIf="data.dialogtype == 'RENAME'">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>Rename {{ data.title }}</h1>
+    </div>
+   
+    <mat-dialog-content>
+       
+        <div class=" form-group mt-3">
+            <label class="d-flex justify-content-end"><span>{{inputLength}}/50</span></label>
+            <input id="menuname" class="form-control" type="text" autocomplete="off" [maxlength]="50" [(ngModel)]="this.menuName" [ngClass]="{'is-invalid':inputError}"  (input)='countName("RENAME_INP")'/>
+        </div>
+       
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mt-2">
+        <button mat-raised-button  (click)="cancel()">{{ data.cancelText }}</button>
+        <button mat-raised-button color="primary"  type="submit" (click)="confirm()" [disabled]="disableSave || this.menuName==this.data.title">{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+  
+</div>
+
+<div *ngIf="data.dialogtype == 'APPROVED'">
+  
+    <mat-dialog-content class=" text-center">
+        <p class="dialog-message">{{ data.message }}</p>
+        <p class="dialog-message">{{ data.title }}</p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button  (click)="cancel()">{{ data.cancelText }}</button>
+        <button mat-raised-button color="primary"  type="submit" (click)="confirm()">{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+    
+</div>
+<div *ngIf="data.dialogtype == 'DEACTIVATE'">
+  
+    <mat-dialog-content class=" text-center">
+        <p class="dialog-message">{{ data.message }}</p>
+        <p class="dialog-message">{{ data.title }}</p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button  mat-dialog-close>{{ data.cancelText }}</button>
+        <button mat-raised-button color="primary"  type="submit" (click)="confirm()">{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+    
+</div>
+<div *ngIf="data.dialogtype == 'CLONE'">
+  
+    <mat-dialog-content class="text-center">
+        <p class="dialog-message">{{ data.message }}</p>
+        <p class="dialog-message">{{ data.title }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button  (click)="cancel()">{{ data.cancelText }}</button>
+        <button mat-raised-button color="primary"  type="submit" (click)="confirm()">{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+   
+</div>
+<div *ngIf="data.dialogtype == 'MOVE'">
+    
+    <mat-dialog-content class="text-center">
+        <p class="dialog-message">{{ data.message }}</p>
+        <p class="dialog-message">{{ data.title }}</p>
+        <select id="ddlcausetype" class="form-control" style="min-width : 30%"  [(ngModel)]="moveparentid"  [ngModelOptions]="{standalone: true}" required>
+            <option value=undefined disabled selected>Select Folder </option>
+            <option *ngFor="let item of data.parentdata" [ngValue]="item.ObjectId">{{item.PATH}}
+            
+        </select>  <!-- [(ngModel)]="parentData"  [ngModelOptions]="{standalone: true}" <option *ngFor="let item of this.addInternalRequestModel.GCPCauseFieldData" [ngValue]="item.id">{{item.value}}-->
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button  (click)="cancel()">{{ data.cancelText }}</button>
+        <button mat-raised-button color="primary"  type="submit" (click)="confirm()" >{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+   
+</div>
+<div *ngIf="data.dialogtype == 'Edit_menu_description'">
+
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{ data.title  }}</h1>
+    </div>
+  
+    <mat-dialog-content>
+    
+    <div class="form-group">
+        <label class="d-flex justify-content-between mt-3"><span>Description</span> <span>{{this.menuDesc.length}}/{{maxDescriptionLength}}</span></label>
+      
+    <textarea id="menudesc"  class="form-control"  [(ngModel)]="this.menuDesc"  rows="4" [maxlength]="150" autocomplete="off" placeholder="Enter Description" (input)='countDesc("Edit_menu_description")' [ngClass]="{'is-invalid':descError}"></textarea>
+    </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mt-2">
+        <button mat-raised-button  mat-dialog-close>{{ data.cancelText }}</button>
+        <button mat-raised-button color="primary"  type="submit" (click)="confirm()" [disabled]= 'disableSave'>{{ data.confirmText }}</button>
+    </mat-dialog-actions>
+   
+    </div>

@@ -1,0 +1,99 @@
+label {
+    font-size: 14px;
+}
+
+.form-group mat-radio-group mat-radio-button{
+    margin-right:10px;
+}
+
+div.mat-form-field-infix{
+    padding: 0px !important;
+    border-top: 0px !important;
+}
+
+.download-icon{margin-top:-4px;}
+
+.client-manage-radio mat-radio-group{
+    background-color: transparent;
+    border: 0;
+}
+
+.align-item-center{
+    align-items: center;
+}
+
+.client-manage-label-style label{
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.col mat-form-field{
+    border: 1px solid;
+    padding: 0.1rem 0.5rem;
+    background: #fff;
+}
+::ng-deep .col mat-form-field .mat-form-field-wrapper{
+    padding: 0;
+}
+::ng-deep .col mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+    border: 0;
+}
+::ng-deep .col mat-form-field .mat-form-field-wrapper .mat-form-field-underline{
+    height: 0;
+}
+
+.SettingPupupInputs mat-radio-group{
+    background-color: transparent;
+    border: none;
+    padding-left: 0;
+}
+
+.formGroupMargin{
+    .form-group{
+        margin-bottom:5px;
+    }
+}
+
+::ng-deep .mat-datetimepicker-calendar-header {
+    padding: 16px;
+    font-size: 14px;
+    color: #000!important;
+    box-sizing: border-box;
+}
+
+::ng-deep .ldrReportSpacing form {
+
+    .form-group{
+        margin: 0;
+    }
+
+}
+
+.SettingPupupInputs label{
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+
+::ng-deep .datePickerStyle{
+    .mat-form-field-wrapper{
+        padding: 0;
+        .mat-form-field-underline{
+            background-color: transparent;
+        }
+    }
+    .mat-form-field-flex{
+        border: 1px solid #000;
+        background-color:#fff;
+    }
+    .mat-form-field-infix{
+        border: 0;
+        padding-left: 5px;
+    }
+    .mat-form-field-suffix{
+        .mat-datetimepicker-toggle Button{
+            color: #00587f;
+        }
+    }
+
+}

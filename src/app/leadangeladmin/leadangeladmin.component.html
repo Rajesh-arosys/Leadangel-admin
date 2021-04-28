@@ -1,0 +1,38 @@
+<div class=" position-relative w-100 h-100"><mat-toolbar color="primary" class=" position-fixed">
+  
+  <span><img src="assets/img/leadangel-white-logo.png"
+    [width]="236" alt="LeadAngel-logo" title="LeadAngel"></span>
+
+    <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  <span class="example-spacer"></span>
+  <span class="user-text-id user-text mr-3">Vyakar Admin Id : {{vyakaradminid}}</span>
+  <span class="user-text">{{userName | titlecase}}</span>  <button mat-icon-button [matMenuTriggerFor]="menu">
+     <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" class="right-nav-drop">
+    <button mat-menu-item (click)="forgotpass('changePassAdmin')">
+        <mat-icon class="text-success">vpn_key</mat-icon> <span>Change Password</span>
+    </button>
+
+    <button mat-menu-item (click)="onAdminLogout()">
+      <mat-icon color="warn">exit_to_app</mat-icon> <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side" opened>
+  <app-leftnavbar></app-leftnavbar>
+    </mat-drawer>
+    <mat-drawer-content>
+ <router-outlet></router-outlet>
+    </mat-drawer-content>
+   
+  
+  </mat-drawer-container>
+</div>
+  <app-custom-notification
+    [Notification] = "Notification" 
+></app-custom-notification>

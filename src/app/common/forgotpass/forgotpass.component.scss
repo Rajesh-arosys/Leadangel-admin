@@ -1,0 +1,31 @@
+.card-message{
+    padding: 7px 14px;
+    display: block;
+    font-size: 14px;
+}
+
+
+.card-message mat-list{
+    padding-top:0;
+    mat-list-item{
+        height: fit-content;
+        mat-icon.text-warning{
+            font-size: 20px;
+             display: flex;
+            align-items: center;
+        }
+        mat-icon.text-succes{
+            font-size: 20px;
+             display: flex;
+            align-items: center;
+        }
+    }
+}
+
+.wifiOff i{
+    font-size:70px;
+}
+
+.loginMessage{
+    background-color: #d0f2ff;
+}

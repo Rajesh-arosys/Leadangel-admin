@@ -1,0 +1,149 @@
+<div *ngIf="data.dialogtype == 'forgetPassClient' || data.dialogtype == 'forgetPassAdmin'">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()" >
+        <mat-dialog-content>
+
+            <div class="mb-4">
+                <mat-card class="loginMessage">
+                    <span class="card-message"> 
+                        {{data.message}}
+                    </span>
+                </mat-card>
+            </div>
+
+            <div class="form-group mb-3" *ngIf="data.dialogtype == 'forgetPassClient'">
+                <input formControlName="clientId" type="number" class="form-control" placeholder="Client ID">
+            </div>
+            <div class="form-group">
+                <input formControlName="emailId" type="email" class="form-control" placeholder="Enter Email ID" ngModel [email]="true">
+            </div>
+  
+            
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="mt-2">
+            <div class="form-group">
+                <button mat-raised-button mat-dialog-close>{{ data.cancelText }}</button>
+                <button [disabled]="!form.valid" mat-raised-button color="primary" >{{ data.confirmText }}</button>
+            </div>
+        </mat-dialog-actions>
+    </form>
+
+</div>
+
+
+<div *ngIf="data.dialogtype == 'admin_reset'">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+       <form >
+        <mat-dialog-content>
+            <div>
+                <mat-card>
+                    <span class="card-message"> 
+                        {{data.message}}
+                    </span>
+                </mat-card>
+            </div>
+            <div class="form-group my-4">
+                <input type="text" class="form-control" placeholder="Enter Email ID">
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="mt-2">
+            <div class="form-group">
+                <button mat-raised-button mat-dialog-close >{{ data.cancelText }}</button>
+                <button mat-raised-button color="primary" >{{ data.confirmText }}</button>
+            </div>
+        </mat-dialog-actions>
+    </form>
+
+</div>
+
+<div *ngIf="data.dialogtype == 'Disconnected'">
+    <mat-dialog-content>
+        <div class="wifiOff text-center">
+            <i class="material-icons">wifi_off</i>
+            <h3>No Internet Connection</h3>
+            <p>Unable to connect to LeadAngel. Please check your internet connection.</p>
+        </div>
+    </mat-dialog-content>
+</div>
+
+
+<div *ngIf="data.dialogtype == 'changePassClient' || data.dialogtype == 'changePassAdmin'">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+       <form [formGroup]="resetForm" (submit)="onSavePassword()"   autocomplete="off">
+        <mat-dialog-content class="pb-2">
+            <div class="pt-3 mb-4">
+                <mat-card class="text-light">
+                    <span class="card-message "> 
+                        <mat-list role="list">
+                            <mat-list-item role="listitem"> 
+                                <mat-icon    [ngClass]="resetForm.controls['password'].hasError('required') || resetForm.controls['password'].hasError('hasCapitalCase')  ? 'text-warning' : 'text-success'">{{ resetForm.controls['password'].hasError('required') ||
+                                    resetForm.controls['password'].hasError('hasCapitalCase') ? 'info' :
+                                    'check_circle' }}</mat-icon>
+                                Must contain at least 1 letter in capital case
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <mat-icon  [ngClass]="resetForm.controls['password'].hasError('required') || resetForm.controls['password'].hasError('hasSmallCase')  ? 'text-warning' : 'text-success'">{{ resetForm.controls['password'].hasError('required') ||
+                                    resetForm.controls['password'].hasError('hasSmallCase') ? 'info' :
+                                    'check_circle' }}</mat-icon>
+                                Must contain at least 1 letter in small case
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <mat-icon   [ngClass]="resetForm.controls['password'].hasError('required') || resetForm.controls['password'].hasError('hasNumber')  ? 'text-warning' : 'text-success'">{{ resetForm.controls['password'].hasError('required') ||
+                                    resetForm.controls['password'].hasError('hasNumber') ? 'info' :
+                                    'check_circle' }}</mat-icon>
+                                Must contain at least 1 number
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <mat-icon  [ngClass]="resetForm.controls['password'].hasError('required') || resetForm.controls['password'].hasError('minlength')  ? 'text-warning' : 'text-success'">{{ resetForm.controls['password'].hasError('required') ||
+                                    resetForm.controls['password'].hasError('minlength') ? 'info' :
+                                    'check_circle' }}</mat-icon>
+                                Must be at least 8 characters
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <mat-icon
+                                  [ngClass]="resetForm.controls['confirmPassword'].hasError('NoPassswordMatch') ? 'text-warning' : 'text-success'">
+                                  {{ resetForm.controls['confirmPassword'].hasError('NoPassswordMatch') ? 'info' :
+                                  'check_circle' }}</mat-icon>
+                                  Password and Confirm Password Must Match
+                              </mat-list-item>
+                          </mat-list>
+                    </span>
+                </mat-card>
+            </div>
+          
+
+                <div class="form-group">
+                    <input placeholder="New Password" id="password"
+                    [(ngModel)]="this.changepassmodel.PasswordM" name="txtPassword" required
+                    formControlName="password" type="password"
+                    class="form-control" >
+                </div>
+                <div class="form-group">
+                    <input   id="confirmPassword"
+                    [(ngModel)]="this.changepassmodel.ConfirmPasswordM" name="txtConfirmPassword" required
+                    formControlName="confirmPassword" type="password"
+                  class="form-control" placeholder="Confirm Password">
+                </div>
+                <!-- <label class="text-danger text-match"
+                *ngIf="resetForm.controls['confirmPassword'].hasError('NoPassswordMatch') && resetForm.controls['confirmPassword'].touched">
+                Password do not match
+              </label> -->
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="m-0 p-0">
+            <div class="form-group">
+                <button mat-raised-button  mat-dialog-close>{{ data.cancelText }}</button>
+                <button mat-raised-button color="primary" [disabled]="resetForm.invalid"  type="submit" mat-raised-button
+                color="primary">{{ data.confirmText }}</button>
+            </div>
+        </mat-dialog-actions>
+    </form>
+
+</div>
+
+<app-custom-notification [Notification] = "Notification"></app-custom-notification>

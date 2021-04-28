@@ -1,0 +1,25 @@
+.comman-filter{
+    position: relative;
+    input{border-radius: 2px;
+      border: 1px solid #ccc;
+      outline: none;
+      margin-left: 10px;
+      padding: 0 15px;
+      font-size: 14px;}
+    .mat-icon{     position: absolute;
+      right: 0px;
+      top: 8px;
+      font-size: 20px;
+      color: #ff60009e;
+    }
+  } 
+
+  ::ng-deep .inputClearCross{
+    position: absolute;
+    right: 3px;
+    top: -1px;
+    span mat-icon{
+        font-size:15px;
+        background-color: #fff;
+    }
+}

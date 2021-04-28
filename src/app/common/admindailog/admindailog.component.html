@@ -1,0 +1,2059 @@
+<!--User and Access Edit and New form-->
+
+
+
+<div *ngIf="(data.dialogtype == 'New'&& data.popupFrom == 'LeadangeluserlistComponent')|| (data.dialogtype=='Edit'&& data.popupFrom == 'LeadangeluserlistComponent')||(data.dialogtype == 'New'&& data.popupFrom == 'ClientuserlistComponent') || (data.dialogtype=='Edit'&& data.popupFrom == 'ClientuserlistComponent')||(data.dialogtype=='Edit'&& data.popupFrom == 'UserAndAccessComponent')||(data.dialogtype=='New'&& data.popupFrom == 'UserAndAccessComponent')">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <form [formGroup]="enroll" (ngSubmit)="addUser()">
+        <mat-dialog-content class="formGroupMargin">
+            <div class="form-group" *ngIf="data.popupFrom == 'ClientuserlistComponent' && data.dialogtype=='New'">
+                <label>Select Client Name<span class="text-danger">*</span></label>
+                <ng-select class="dropdownselect" placeholder=' Select Client Name ' name="clientidval" formControlName="clientidval" required>
+                    <ng-option *ngFor="let client of data.dropdownOptions" [value]="client"> {{client.clientId}}-{{client.clientName}}</ng-option>
+                </ng-select>
+                <div *ngIf="enroll.controls['clientidval'].touched && enroll.controls['clientidval'].invalid">
+                    <mat-error *ngIf="enroll.controls['clientidval'].hasError('required')">
+                        Client name is required
+                    </mat-error>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Role<span class="text-danger">*</span></label>
+                <select class="form-control" autocomplete="off" name="userrole" formControlName="userrole" [ngClass]="enroll.controls['userrole'].touched && enroll.controls['userrole'].invalid ? 'is-invalid' : ''" required>
+                      <option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</option>
+                  </select>
+                <div *ngIf="enroll.controls['userrole'].touched && enroll.controls['userrole'].invalid">
+                    <mat-error *ngIf="enroll.controls['userrole'].hasError('required')">
+                        Role is required
+                    </mat-error>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>First Name<span class="text-danger">*</span></label>
+                <input type="text" autocomplete="off" alpha="" class="form-control" name="firstname" formControlName="firstname" [ngClass]="enroll.controls['firstname'].touched && enroll.controls['firstname'].invalid ? 'is-invalid' : ''" required>
+                <div *ngIf="enroll.controls['firstname'].touched && enroll.controls['firstname'].invalid">
+                    <mat-error *ngIf="enroll.controls['firstname'].hasError('required')">
+                        First name required
+                    </mat-error>
+                    <mat-error *ngIf="enroll.controls['firstname'].hasError('pattern')">
+                        Only allow alphabet and space
+                    </mat-error>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Last Name<span class="text-danger">*</span></label>
+                <input type="text" autocomplete="off" class="form-control" name="lastname" formControlName="lastname" [ngClass]="enroll.controls['lastname'].touched && enroll.controls['lastname'].invalid ? 'is-invalid' : ''" required>
+                <div *ngIf="enroll.controls['lastname'].touched && enroll.controls['lastname'].invalid">
+                    <mat-error *ngIf="enroll.controls['lastname'].hasError('required')">
+                        Last name required
+                    </mat-error>
+                    <mat-error *ngIf="enroll.controls['lastname'].hasError('pattern')">
+                        Only allow alphabet and space
+                    </mat-error>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label>Email Id<span class="text-danger">*</span></label>
+                <input type="text" autocomplete="off" class="form-control" [readonly]="data.dialogtype=='Edit'" name="useremailaddress" formControlName="useremailaddress" [ngClass]="enroll.controls['useremailaddress'].touched && enroll.controls['useremailaddress'].invalid ? 'is-invalid' : ''"
+                    required>
+                <mat-error *ngIf="enroll.controls['useremailaddress'].hasError('pattern')">
+                    Enter valid Email Id for example "example@abc.com"
+                </mat-error>
+                <div *ngIf="enroll.controls['useremailaddress'].touched && enroll.controls['useremailaddress'].invalid">
+                    <mat-error *ngIf="enroll.controls['useremailaddress'].hasError('required')">
+                        Email id required
+                    </mat-error>
+                </div>
+
+            </div>
+            <div *ngIf="data.popupFrom != 'LeadangeluserlistComponent'" class="form-group mt-3">
+                <mat-checkbox class="example-margin" name="ssoEnabled" formControlName="ssoEnabled">SSO Enabled</mat-checkbox>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="mt-2">
+            <div class="form-group">
+                <button mat-raised-button color="primary" [disabled]="!enroll.valid" type="submit">{{data.confirmText}}</button>
+                <button mat-raised-button mat-dialog-close>Cancel</button>
+            </div>
+        </mat-dialog-actions>
+    </form>
+</div>
+<div *ngIf="data.dialogtype == 'ResetpassLeadangel_User'">
+    <div class="header dailog-header">
+
+    </div>
+    <mat-dialog-content class="text-center">
+        <h5>{{data.message}}</h5>
+        <p>{{data.title}}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary">{{data.confirmText}}</button>
+    </mat-dialog-actions>
+</div>
+<!--User and Access delete form-->
+<div *ngIf="(data.dialogtype == 'Delete_Leadangel'||data.dialogtype == 'Delete_Client'||data.dialogtype=='Delete'||data.dialogtype=='Reset')&& (data.popupFrom != 'srAccMapping')&& (data.popupFrom != 'CrmdatarefreshComponent')">
+    <div class="header dailog-header">
+
+    </div>
+    <mat-dialog-content class="text-center">
+        <h5>{{data.message}}</h5>
+        <p>{{data.title}}</p>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary" (click)="addUser()">{{data.confirmText}}</button>
+    </mat-dialog-actions>
+</div>
+
+<!-- manage client setting -->
+<div *ngIf="data.dialogtype == 'Setting'">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <form [formGroup]="mngClientPopUp" class="frm">
+        <mat-dialog-content>
+
+            <div class="form-group SettingPupupInputs">
+
+                <!-- 1 -->
+                <!-- <mat-form-field appearance="standard"> -->
+                <label id="ClientType">Client Type</label>
+                <mat-radio-group aria-label="ClientType" class="form-control" formControlName="ClientType" required name="ClientType">
+                    <mat-radio-button value="Free">Free </mat-radio-button>
+                    <mat-radio-button value="Paid">Paid</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['ClientType'].hasError('required')">
+                        **** Client Type ****
+                    </mat-error> -->
+                <!-- </mat-form-field> -->
+                <!-- 2 -->
+                <label id="router">Router</label>
+                <mat-radio-group aria-label="router" class="form-control" formControlName="Router" required name="Router">
+                    <mat-radio-button value="Y">True </mat-radio-button>
+                    <mat-radio-button value="N">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['Router'].hasError('required')">
+                        **** Router ****
+                    </mat-error> -->
+                <!-- 3 -->
+                <label id="weekly">Weekly</label>
+                <mat-radio-group aria-label="weekly" class="form-control" formControlName="FreeUserRun" required name="FreeUserRun">
+                    <mat-radio-button value="Y">True </mat-radio-button>
+                    <mat-radio-button value="N">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['ClientType'].hasError('required')">
+                        **** Weekly ****
+                    </mat-error> -->
+
+                <!-- 4 -->
+                <label id="Segmentation">Segmentation</label>
+                <mat-radio-group aria-label="Segmentation" class="form-control" formControlName="Segmentation" required name="Segmentation">
+                    <mat-radio-button value="Y">True </mat-radio-button>
+                    <mat-radio-button value="N">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['Segmentation'].hasError('required')">
+                        **** Segmentation ****
+                    </mat-error> -->
+
+
+                <!-- 5 -->
+                <label id="PartnerRouter">Partner Router</label>
+                <mat-radio-group aria-label="PartnerRouter" class="form-control" formControlName="PartnerRouter" required name="PartnerRouter">
+                    <mat-radio-button value="Y">True </mat-radio-button>
+                    <mat-radio-button value="N">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['PartnerRouter'].hasError('required')">
+                        **** Partner Router ****
+                    </mat-error> -->
+                <!-- 6 -->
+                <label id="dataappend">DataAppend</label>
+                <mat-radio-group aria-label="dataappend" class="form-control" formControlName="DataAppend" required name="DataAppend">
+                    <mat-radio-button value="Y">True </mat-radio-button>
+                    <mat-radio-button value="N">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['DataAppend'].hasError('required')">
+                        **** DataAppend ****
+                    </mat-error> -->
+                <!-- 7 -->
+                <label id="free_routinglimit">Free Routing Limit</label>
+                <input class="form-control " type="number" placeholder="Routing Limit" name="FreeRoutingLimit" formControlName="FreeRoutingLimit" (keydown)="countKeys($event)" required>
+                <mat-error *ngIf="mngClientPopUp.controls['FreeRoutingLimit'].hasError('required')">
+                    **** Free Routing Limit ****
+                </mat-error>
+
+
+                <!-- 8 -->
+
+                <label id="CRMisValid">CRM isValid</label>
+                <mat-radio-group aria-label="CRMisValid" class="form-control" formControlName="CRMIsValid" required name="CRMIsValid">
+                    <mat-radio-button value="true">True </mat-radio-button>
+                    <mat-radio-button value="false">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['CRMIsValid'].hasError('required')">
+                        **** CRM isValid ****
+                    </mat-error> -->
+
+
+
+                <!-- 9 -->
+
+                <label id="ExternalCRMSystem">CRM Type</label>
+                <select class="form-control" name="ExternalCRMSystem" formControlName="ExternalCRMSystem" required>
+                    <option value=null>Default</option>
+                    <option value="SFDC">SFDC</option>
+                    <option value="HubSpot">HubSpot</option>
+                </select>
+                <!-- <mat-form-field> -->
+                    <!-- <mat-label>Select an option</mat-label> -->
+                    <!-- <mat-select name="ExternalCRMSystem" formControlName="ExternalCRMSystem" required>
+                        <mat-option value=null>Default</mat-option>
+                        <mat-option value="SFDC">SFDC</mat-option>
+                        <mat-option value="HubSpot">HubSpot</mat-option>
+                    </mat-select> -->
+                   
+                <!-- </mat-form-field> -->
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['ExternalCRMSystem'].hasError('required')">
+                        **** CRM Type ****
+                    </mat-error> -->
+
+
+                <!-- 10 -->
+
+
+                <label id="MAIsValid">MA isValid</label>
+                <mat-radio-group aria-label="MAIsValid" class="form-control" formControlName="MAIsValid" required name="MAIsValid">
+                    <mat-radio-button value="true">True </mat-radio-button>
+                    <mat-radio-button value="false">False</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['MAIsValid'].hasError('required')">
+                        **** MA isValid ****
+                    </mat-error> -->
+
+
+                <!-- 11 -->
+
+                <label id="ExternalMASystem">MA Type</label>
+                <select class="form-control" name="ExternalMASystem" formControlName="ExternalMASystem" required>
+                    <option value=''>Default</option>
+                    <option value="Pardot">Pardot</option>
+                    <option value="Marketo">Marketo</option>
+                </select>
+                <!-- <mat-form-field>
+                    <mat-label>Select an option</mat-label>
+                    <mat-select name="ExternalMASystem" formControlName="ExternalMASystem" required>
+                        <mat-option value=''>Default</mat-option>
+                        <mat-option value="Pardot">Pardot</mat-option>
+                        <mat-option value="Marketo">Marketo</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['ExternalMASystem'].hasError('required')">
+                        **** MA Type ****
+                    </mat-error> -->
+
+
+                <!-- 12 -->
+
+                <label id="MatchLevel">Match Level</label>
+                <select class="form-control" name="MatchLevel" formControlName="MatchLevel" required>
+                    <option value=''>Default</option>
+                    <option value="Strict">Strict</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Lenient">Lenient</option>
+                </select>
+                <!-- <mat-form-field>
+                    <mat-label>Select an option</mat-label>
+                    <mat-select name="MatchLevel" formControlName="MatchLevel" required>
+                        <mat-option value=''>Default</mat-option>
+                        <mat-option value="Strict">Strict</mat-option>
+                        <mat-option value="Moderate">Moderate</mat-option>
+                        <mat-option value="Lenient">Lenient</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['MatchLevel'].hasError('required')">
+                        **** >Match Level ****
+                    </mat-error> -->
+                <!-- 13 -->
+
+                <label id="SFDCIntegration">SFDC Integration</label>
+                <mat-radio-group aria-label="SFDCIntegration" class="form-control" formControlName="SFDCIntegration" required name="SFDCIntegration">
+                    <mat-radio-button value="Rest">Rest </mat-radio-button>
+                    <mat-radio-button value="Soap">Soap</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['SFDCIntegration'].hasError('required')">
+                        **** SFDC Integration ****
+                    </mat-error> -->
+                <!-- 14 -->
+
+                <label id="AssignmentBlockLimit">Assignment Block Limit</label>
+                <input class="form-control form-control-sm " type="number" placeholder="Assignment block limit" name="AssignmentBlockLimit" formControlName="AssignmentBlockLimit" (keydown)="countKeys($event)" required>
+                <mat-error *ngIf="mngClientPopUp.controls['AssignmentBlockLimit'].hasError('required')">
+                    **** Free Routing Limit ****
+                </mat-error>
+
+                <!-- 15 -->
+                <label id="QuickRouterRunTimeInterval">Quick Router Frequency (Seconds)</label>
+                <input class="form-control form-control-sm " type="number" placeholder="Quick Router Frequency" name="QuickRouterRunTimeInterval" formControlName="QuickRouterRunTimeInterval" (keydown)="countKeys($event)" required>
+                <mat-error *ngIf="mngClientPopUp.controls['QuickRouterRunTimeInterval'].hasError('required')">
+                    **** Quick Router Frequency ****
+                </mat-error>
+
+                <!-- 16 -->
+
+                <label id="RouterTimeInterval">Router Frequency (Minutes)</label>
+                <input class="form-control form-control-sm " type="number" placeholder="Router Frequency" name="RouterTimeInterval" formControlName="RouterTimeInterval" (keydown)="countKeys($event)" required>
+                <mat-error *ngIf="mngClientPopUp.controls['RouterTimeInterval'].hasError('required')">
+                    **** Router Frequency ****
+                </mat-error>
+
+                <!-- 17 -->
+                <label id="SegmentationTimeInterval">Segmentation Time Interval(Minutes)</label>
+                <input class="form-control form-control-sm " type="number" placeholder="Segmentation Time Interval" name="SegmentationTimeInterval" formControlName="SegmentationTimeInterval" (keydown)="countKeys($event)" required>
+                <mat-error *ngIf="mngClientPopUp.controls['SegmentationTimeInterval'].hasError('required')">
+                    **** Segmentation Time Interval ****
+                </mat-error>
+                <!-- 18 -->
+                <label id="ParterRouterTimeInterval">Partner Router Time Interval(Minutes)</label>
+                <input class="form-control form-control-sm " type="number" placeholder="Partner Router Time Interval" name="ParterRouterTimeInterval" formControlName="ParterRouterTimeInterval" (keydown)="countKeys($event)" required>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['ParterRouterTimeInterval'].hasError('required')">
+                    **** Partner Router Time Interval ****
+                </mat-error> -->
+                <!-- 19 read only-->
+                <label id="OrgId">SFDC Organization ID</label>
+                <input class="form-control form-control-sm " type="text" placeholder="SFDC Organization ID" name="OrgId" formControlName="OrgId" required [readonly]="true">
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['OrgId'].hasError('required')" >
+                    **** SFDC Organization ID ****
+                    </mat-error> -->
+                <!-- 20 read only-->
+                <label id="NamespacePrefix">Namespace</label>
+                <input class="form-control form-control-sm " type="text" placeholder="Namespace" name="NamespacePrefix" formControlName="NamespacePrefix" required [readonly]="true">
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['NamespacePrefix'].hasError('required')">
+                    **** Namespace ****
+                    </mat-error> -->
+                <!-- 21 -->
+                <label>Next QuickRouter Run Time</label>
+                <mat-form-field class="datePickerStyle">
+                    <mat-datetimepicker-toggle [for]="NextQuickRouterRunTs" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #NextQuickRouterRunTs type="datetime" openOnFocus="true" timeInterval="5">
+                    </mat-datetimepicker>
+                    <input matInput formControlName="NextQuickRouterRunTs" [matDatetimepicker]="NextQuickRouterRunTs" required autocomplete="false" [readonly]="true">
+                </mat-form-field>
+
+                <!-- 22 -->
+                <label>Next RouterRun Time</label>
+                <mat-form-field class="datePickerStyle">
+                    <mat-datetimepicker-toggle [for]="NextRouterRunTs" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #NextRouterRunTs type="datetime" openOnFocus="true" timeInterval="5">
+                    </mat-datetimepicker>
+                    <input matInput formControlName="NextRouterRunTs" [matDatetimepicker]="NextRouterRunTs" required autocomplete="false" [readonly]="true">
+                </mat-form-field>
+
+
+                <!-- 23 -->
+                <label>Next Segmentation Run Time</label>
+                <mat-form-field class="datePickerStyle">
+                    <mat-datetimepicker-toggle [for]="NextSegmentationRunTs" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #NextSegmentationRunTs type="datetime" openOnFocus="true" timeInterval="5">
+                    </mat-datetimepicker>
+                    <input matInput formControlName="NextSegmentationRunTs" [matDatetimepicker]="NextSegmentationRunTs" required autocomplete="false" [readonly]="true">
+                </mat-form-field>
+                <!-- 24 -->
+                <label>Next Partner RouterRun Time</label>
+                <mat-form-field class="datePickerStyle">
+                    <mat-datetimepicker-toggle [for]="NextPartnerRouterRunTs" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #NextPartnerRouterRunTs type="datetime" openOnFocus="true" timeInterval="5">
+                    </mat-datetimepicker>
+                    <input matInput formControlName="NextPartnerRouterRunTs" [matDatetimepicker]="NextPartnerRouterRunTs" required autocomplete="false" [readonly]="true">
+                </mat-form-field>
+                <!-- 25 -->
+                <label id="SendAlertMail">Send Job Stuck Mail</label>
+                <mat-radio-group aria-label="SendAlertMail" class="form-control" formControlName="SendAlertMail" required name="SendAlertMail">
+                    <mat-radio-button value="Y">Yes </mat-radio-button>
+                    <mat-radio-button value="N">No</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['SendAlertMail'].hasError('required')">
+                        **** Send Job Stuck Mail ****
+                    </mat-error> -->
+                <!-- 26 -->
+                <label id="AppVersion">Auto Conversion</label>
+                <mat-radio-group aria-label="AppVersion" class="form-control" formControlName="AppVersion" required name="AppVersion">
+                    <mat-radio-button value="Y">Yes </mat-radio-button>
+                    <mat-radio-button value="N">No</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['AppVersion'].hasError('required')">
+                        **** Auto Conversion ****
+                    </mat-error> -->
+                <!-- 27 -->
+                <label id="LeadIndex_1">Lead Index Name</label>
+                <input class="form-control form-control-sm " type="text" placeholder="Routing Limit" name="LeadIndex_1" formControlName="LeadIndex_1" required [readonly]="true">
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['LeadIndex_1'].hasError('required')">
+                    **** Lead Index Name ****
+                    </mat-error> -->
+
+                <!-- 28 -->
+                <label id="AccountIndex_1">Account Index Name</label>
+                <input class="form-control form-control-sm " type="text" placeholder="Routing Limit" name="AccountIndex_1" formControlName="AccountIndex_1" required [readonly]="true">
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['AccountIndex_1'].hasError('required')">
+                    **** >Account Index Name ****
+                    </mat-error> -->
+
+                <!-- 29 -->
+                <label id="UseCustomRule">Use Custom Rule</label>
+                <mat-radio-group aria-label="UseCustomRule" class="form-control" formControlName="UseCustomRule" required name="UseCustomRule">
+                    <mat-radio-button value="Y">Yes </mat-radio-button>
+                    <mat-radio-button value="N">No</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['UseCustomRule'].hasError('required')">
+                        **** Use Custom Rule ****
+                    </mat-error> -->
+
+                <!-- 30 -->
+                <label id="IsMALeadConfigure">MA Configure</label>
+                <mat-radio-group aria-label="IsMALeadConfigure" class="form-control" formControlName="IsMALeadConfigure" required name="IsMALeadConfigure">
+                    <mat-radio-button value="1">Yes </mat-radio-button>
+                    <mat-radio-button value="0">No</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['IsMALeadConfigure'].hasError('required')">
+                        **** MA Configure ****
+                    </mat-error> -->
+
+                <!-- 31 -->
+                <label id="IsPartnerConfigure">Partner Configured</label>
+                <mat-radio-group aria-label="IsPartnerConfigure" class="form-control" formControlName="IsPartnerConfigure" required name="IsPartnerConfigure">
+                    <mat-radio-button value="1">Yes </mat-radio-button>
+                    <mat-radio-button value="0">No</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error *ngIf="mngClientPopUp.controls['IsPartnerConfigure'].hasError('required')">
+                        **** Partner Configured ****
+                    </mat-error> -->
+
+                <!-- 32 -->
+                <label>Contract Expiration Date</label>
+                <mat-form-field class="datePickerStyle">
+                    <mat-datetimepicker-toggle [for]="ContractExpirationDate" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #ContractExpirationDate type="date" openOnFocus="true" timeInterval="5">
+                    </mat-datetimepicker>
+                    <input matInput formControlName="ContractExpirationDate" [matDatetimepicker]="ContractExpirationDate"  autocomplete="false" [readonly]="true">
+                </mat-form-field>
+                <!-- 2 -->
+                <!-- 2 -->
+                <!-- 2 -->
+                <!-- 2 -->
+                <!-- 2 -->
+                <!-- 2 -->
+                <!-- 2 -->
+                <!-- 2 -->
+
+
+
+
+            </div>
+  
+
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="mt-2">
+            <button mat-raised-button mat-dialog-close>Cancel</button>
+            <button mat-raised-button color="primary" type="submit" class="mr-2" (click)="updateSetting('update')">Update</button>
+            <!-- <button mat-raised-button color = "primary" >Download</button> -->
+
+            <!-- csv download single record -->
+            <app-download-csv 
+                [csvData]="csvData" 
+                [csvHeader]="csvHeader" 
+                [title]="title" 
+                [buttonName]="buttonName" 
+                [fileName]="fileName" 
+                [isDownloaded]="isDownloaded" 
+                (click)="download('dwnldSingleRow')" 
+                [loader] = "loader"
+                [disableDwnld]="disableDwnld">
+            </app-download-csv>
+
+        </mat-dialog-actions>
+    </form>
+</div>
+
+<!-- datatable view dialog -->
+<div *ngIf="(data.dialogtype == 'View' && data.title == 'leadDetailReport')">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>Lead Detail</h1>
+    </div>
+    <mat-dialog-content class="py-3 ldrReportSpacing">
+        <form>
+            <!-- last name -->
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">First Name</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.FirstName}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Last Name</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.LastName}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Email</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.Email}}</label>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Street	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.Street}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">City	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.City}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">State	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.State}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Country	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.Country}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Created Date</label>
+                    <div class="col-sm-7">
+            <label  class="col-form-label">            {{data.data.CreatedDate==null?'':data.data.CreatedTs}}
+            </label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Angel Created Date</label>
+                    <div class="col-sm-7">
+            <label  class="col-form-label">            {{data.data.CreatedTs==null?'':data.data.CreatedDate}}
+            </label>
+
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Owner</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.ownerName}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Router	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.LeadRouterName}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Segment</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.LeadSegmentname}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Router Block</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.AssignmentBlockID}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Route Status Reason</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.RouteStatusReason}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Routed Timestamp	</label>
+                    <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RoutedTimestamp==null?'':data.data.RoutedTimestamp}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Company Name</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.Company}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">CRM_MatchScore</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.CRM_MatchScore}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Matched Lead Angel Account Name</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.MatchedVyakarAccountName}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mt-2">
+        <button mat-raised-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+</div>
+<!-- popup for lead routing report -->
+<div *ngIf="(data.dialogtype == 'View' && data.title == 'Lead Routing Report')">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}} Detail</h1>
+    </div>
+    <mat-dialog-content class="py-3 ldrReportSpacing">
+        <form>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">FirstName</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.FirstName}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">LastName</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.LastName}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Email	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.Email}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Company Name</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.Company}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Matched Account Name</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.MatchedVyakarAccountName}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Owner</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.ownerName}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold"> Router Block</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.AssignmentBlockID}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Segment</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.LeadSegmentname}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Lead Router	</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.LeadRouterName}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">RouteStatusReason</label>
+                    <div class="col-sm-7">
+                        <label class="col-form-label">{{data.data.RouteStatusReason}}</label>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">RoutedTimestamp</label>
+                    <div class="col-sm-7">
+    <label  class="col-form-label">{{data.data.RoutedTimestamp==null?'':data.data.RoutedTimestamp | date:'medium' :'UTC'}} UTC</label>
+    
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Created TS</label>
+                    <div class="col-sm-7">
+        <label  class="col-form-label">{{data.data.CreatedDate==null?'':data.data.CreatedDate | date:'medium' :'UTC'}} UTC</label>
+        
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-5 col-form-label font-weight-bold">Vyakar Created TS</label>
+                    <div class="col-sm-7">
+        <label  class="col-form-label"> {{data.data.CreatedDate==null?'':data.data.CreatedDate | date:'medium' :'UTC'+'UTC'}}</label>
+        
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+
+            <!-- <div class="form-group">
+        <div class="row">
+      <label  class="col-sm-4 col-form-label font-weight-bold">Id</label>
+      <div class="col-sm-8">
+      <label  class="col-form-label">{{data.data.Id}}</label>
+      </div>
+      </div>
+    </div> -->
+
+            <!-- <div class="form-group">
+        <div class="row">
+      <label  class="col-sm-4 col-form-label font-weight-bold">QualifiedLeadSegmentID	</label>
+      <div class="col-sm-8">
+        <label  class="col-form-label">{{data.data.QualifiedLeadSegmentID}}</label>
+      </div>
+      </div>
+    </div> -->
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mt-2">
+        <button mat-raised-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+
+</div>
+
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Account Coverage Report')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Account Coverage Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <!-- last name -->
+<div class="form-group mb-1">
+                <div class="row">
+              <label  class="col-sm-5 col-form-label font-weight-bold">Account ID</label>
+              <div class="col-sm-7">
+                <label  class="col-form-label">{{data.data.AccountID}}</label>
+              </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Name}}</label>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Street</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingStreet}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing City	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCity}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing State </label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingState}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Country	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCountry}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Website	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Website}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Annual Revenue</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.AnnualRevenue}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Ownership	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Ownership}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Inactive Account</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Inactive_account__c}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Dedupe Group Id</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Dedupe_GroupID}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Dedupe Status</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Dedupe_Status}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Record Type </label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RecordType}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Remove From Matching</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RemoveFromMatching}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Is Deleted </label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.IsDeleted}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Created Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.CreatedDate}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Duplicate Account Report')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Duplicate Account Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Dedupe Group Id</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Dedupe_GroupID}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- last name -->
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Name}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Website</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Website}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      
+      
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Country	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCountry}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing State </label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingState}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing City	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCity}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Postal Code	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingPostalCode}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Street	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingStreet}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Shipping Country	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ShippingCountry}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Shipping State	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ShippingState}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Shipping City	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ShippingCity}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Record Type	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RecordType}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+     
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Created Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.CreatedDate}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Leads Matched Without Account')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Account Coverage Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <!-- last name -->
+<div class="form-group mb-1">
+                <div class="row">
+              <label  class="col-sm-5 col-form-label font-weight-bold">Name</label>
+              <div class="col-sm-7">
+                <label  class="col-form-label">{{data.data.Name}}</label>
+              </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">First Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.FirstName}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Last Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.LastName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Company</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Company}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Email</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Email}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Website</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Website}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Annual Revenue</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.AnnualRevenue}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Created Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.CreatedDate}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Leads Matched With Account')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Account Coverage Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <!-- last name -->
+<div class="form-group mb-1">
+                <div class="row">
+              <label  class="col-sm-5 col-form-label font-weight-bold">Account Id</label>
+              <div class="col-sm-7">
+                <label  class="col-form-label">{{data.data.AccountID}}</label>
+              </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Account Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.accountName}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Matched Lead Angel Account Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.MatchedLeadAngelAccountName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.leadName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead First Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.leadFirstName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead Last Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.leadLastName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead Company</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.leadCompany}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead Website</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.leadWebsite}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead Email</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.leadEmail}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Record Type	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RecordType}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Country</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCountry}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Created Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.CreatedDate}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+
+
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Lead Upload Error Report')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Lead Upload Error Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <!-- last name -->
+<div class="form-group mb-1">
+                <div class="row">
+              <label  class="col-sm-5 col-form-label font-weight-bold">Lead Id</label>
+              <div class="col-sm-7">
+                <label  class="col-form-label">{{data.data.LeadID}}</label>
+              </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Owner Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ownerName}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">First Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.FirstName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Last Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.LastName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Company</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Company}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Email</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Email}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Route Status Reason</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RouteStatusReason}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Routed Timestamp</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RoutedTimestamp}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold"> Matched Lead Angel Account Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.MatchedLeadAngelAccountName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Upload Failure Reason</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.UploadFailureReason}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Upload Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Createdts}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Modified Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Modifiedts}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Upload Status</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.UploadStatus}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Upload Type</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.uploadType}}</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Routing Error Report')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Routing Error Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <!-- last name -->
+<div class="form-group mb-1">
+                <div class="row">
+              <label  class="col-sm-5 col-form-label font-weight-bold">Id</label>
+              <div class="col-sm-7">
+                <label  class="col-form-label">{{data.data.Id}}</label>
+              </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Lead Id</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.LeadID}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Owner Id</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.OwnerId}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Owner Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ownerName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">First Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.FirstName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Last Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.LastName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Email</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Email}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Company</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Company}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Matched Lead Angel Account Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.MatchedLeadAngelAccountName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Assignment Block ID	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.AssignmentBlockID}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Route Status Reason</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RouteStatusReason}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Routed Timestamp</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RoutedTimestamp}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+
+<div *ngIf = "(data.dialogtype == 'View' && data.title == 'Account Upload Error Report')" >
+  <div class = "header dailog-header">
+    <h1 mat-dialog-title>Account Upload Error Detail</h1>
+</div>
+  <mat-dialog-content class="py-3">
+    <form>
+      <!-- last name -->
+<div class="form-group mb-1">
+                <div class="row">
+              <label  class="col-sm-5 col-form-label font-weight-bold">Name</label>
+              <div class="col-sm-7">
+                <label  class="col-form-label">{{data.data.Name}}</label>
+              </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Street</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingStreet}}</label>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing City</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCity}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing State</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingState}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Billing Country</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.BillingCountry}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Industry</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Industry}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Website</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Website}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Annual Revenue</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.AnnualRevenue}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Ownership</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Ownership}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Record Type	</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RecordType}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Remove From Matching</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.RemoveFromMatching}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Upload Failure Reason</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.UploadFailureReason}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Upload Status</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.UploadStatus}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">External System Name</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ExternalSystemName}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">External System Type</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.ExternalSystemType}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="form-group mb-1">
+        <div class="row">
+          <label  class="col-sm-5 col-form-label font-weight-bold">Created Date</label>
+          <div class="col-sm-7">
+            <label  class="col-form-label">{{data.data.Createdts}}</label>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align = "end" class = "mt-2">
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+</div>
+
+<div *ngIf="(data.dialogtype == 'View' && data.title == 'leadSalesTeam')">
+  <div class="header dailog-header">
+      <h1 mat-dialog-title>Lead Detail</h1>
+  </div>
+  <mat-dialog-content class="py-3 ldrReportSpacing">
+      <form>
+          <!-- last name -->
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">First Name</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.FirstName}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Last Name</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.LastName}}</label>
+                  </div>
+              </div>
+          </div>
+
+          <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Email</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.Email}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+            <div class="row">
+                <label class="col-sm-5 col-form-label font-weight-bold">Lead Company Name</label>
+                <div class="col-sm-7">
+                    <label class="col-form-label">{{data.data.Company}}</label>
+                </div>
+            </div>
+        </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+            <div class="row">
+                <label class="col-sm-5 col-form-label font-weight-bold">Matched Lead Angel Account Name</label>
+                <div class="col-sm-7">
+                    <label class="col-form-label">{{data.data.MatchedLeadAngelAccountName}}</label>
+                </div>
+            </div>
+        </div>
+  
+        <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Lead Owner</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.ownerName}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Lead Router	</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.LeadRouterName}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Sales Team Name</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.LeadSegmentName}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Router Block</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.AssignmentBlockID}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Route Status Reason</label>
+                  <div class="col-sm-7">
+                      <label class="col-form-label">{{data.data.RouteStatusReason}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="form-group" *ngIf="data.data.RoutedTimestamp!=null">
+              <div class="row">
+                  <label class="col-sm-5 col-form-label font-weight-bold">Routed Timestamp	</label>
+                  <div class="col-sm-7">
+          <label  class="col-form-label">{{data.data.RoutedTimestamp==null?'':data.data.RoutedTimestamp}}</label>
+                  </div>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+  
+
+      </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="mt-2">
+      <button mat-raised-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</div>
+
+<!--   popup for Sraccount mapping-->
+<div *ngIf="(data.dialogtype == 'Edit' && data.popupFrom == 'srAccMapping')">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <mat-dialog-content>
+
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-4 col-form-label font-weight-bold">Account Name	</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{data.data.AccountName}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-4 col-form-label font-weight-bold">Account Type	</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{data.data.AccountType}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-4 col-form-label font-weight-bold">Sales Rep Name	</label>
+                <div class="col-sm-8">
+                    <select class=" form-control" name="name" [(ngModel)]="srName">
+          <option
+            *ngFor="let data of this.SrAcMappingAction.data"
+            [value]="data.Name">{{data.Name}}
+           </option>
+        </select>
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mt-2">
+        <button mat-button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-raised-button (click)="onSubmit()" color="primary">Save</button>
+    </mat-dialog-actions>
+    <app-progress-spinner class="spinner-position" [mode]="ProgressSpinnermode" *ngIf="this.displayProgressSpinner">
+    </app-progress-spinner>
+
+</div>
+<div *ngIf="(data.dialogtype == 'Delete' && data.popupFrom == 'srAccMapping')">
+
+    <mat-dialog-content class="text-center">
+        <h5>{{data.message}}</h5>
+        <p>{{data.title}}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary" (click)="deleteSRA()">{{data.confirmText}}</button>
+    </mat-dialog-actions>
+</div>
+
+
+<!-- add crm data refresh  -->
+
+<div *ngIf="data.dialogtype == 'add_crm_dialog_users'&& data.popupFrom=='CrmdatarefreshComponent'||data.dialogtype == 'Edit'&& data.popupFrom=='CrmdatarefreshComponent'">
+
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}} </h1>
+    </div>
+
+    <form [formGroup]="crmData" (ngSubmit)="crmOut()">
+        <mat-dialog-content>
+            <div class="form-group mt-3">
+                <ng-select *ngIf="data.dialogtype == 'add_crm_dialog_users'" name="c_clientid" placeholder=' Select Client Name' formControlName="c_clientid" required>
+                    <ng-option *ngFor="let client of data.clientid" [value]="client.clientId"> {{client.clientId}}-{{client.clientName}}
+                    </ng-option>
+                </ng-select>
+
+                <div *ngIf="crmData.controls['c_clientid'].touched && crmData.controls['c_clientid'].invalid">
+                    <mat-error *ngIf="crmData.controls['c_clientid'].hasError('required')">
+                        Client name is required
+                    </mat-error>
+                </div>
+            </div>
+            <div class="form-group">
+                <label> Action <span class="text-danger">*</span></label>
+                <div class="col-md-12 px-0">
+                    <mat-radio-group aria-label="Select an option" name="action" id="action" formControlName="action" [ngClass]="crmData.controls['action'].touched && crmData.controls['action'].invalid ? 'is-invalid' : ''">
+                        <mat-radio-button class="pr-4" value="1" [checked]="data.dialogtype == 'add_crm_dialog_users'">Rematch</mat-radio-button>
+                        <mat-radio-button class="pr-4" value="2">Reupload</mat-radio-button>
+                        <mat-radio-button class="pr-4" *ngIf="data.dialogtype != 'Edit'" value="3">Both</mat-radio-button>
+                    </mat-radio-group>
+                    <div *ngIf="crmData.controls['action'].touched && crmData.controls['action'].invalid">
+                        <mat-error *ngIf="crmData.controls['action'].hasError('required')">
+                            Action required
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label> External System Type <span class="text-danger">*</span></label>
+                <div class="col-md-12 px-0">
+                    <mat-radio-group aria-label="Select an option" id="externalsystemtype" name="externalsystemtype" formControlName="externalsystemtype">
+                        <mat-radio-button class="pr-4" value="CRM" [checked]="data.dialogtype == 'add_crm_dialog_users'">CRM</mat-radio-button>
+                        <mat-radio-button class="pr-4" value="MA">MA</mat-radio-button>
+                    </mat-radio-group>
+                    <div *ngIf="crmData.controls['externalsystemtype'].touched && crmData.controls['externalsystemtype'].invalid">
+                        <mat-error *ngIf="crmData.controls['externalsystemtype'].hasError('required')">
+                            External system type required
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Filter Condition <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="filtercondition" formControlName="filtercondition" placeholder="Filter Condition" [ngClass]="crmData.controls['filtercondition'].touched && crmData.controls['filtercondition'].invalid ? 'is-invalid' : ''"
+                    required>
+                <div *ngIf="crmData.controls['filtercondition'].touched && crmData.controls['filtercondition'].invalid">
+                    <mat-error *ngIf="crmData.controls['filtercondition'].hasError('required')">
+                        Filter condition required
+                    </mat-error>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="mt-2">
+            <button mat-raised-button mat-dialog-close>Cancel</button>
+            <button mat-raised-button [disabled]="!crmData.valid" type="submit" color="primary">Save</button>
+        </mat-dialog-actions>
+    </form>
+</div>
+
+
+<!-- execute admin user list  -->
+<div *ngIf="data.dialogtype == 'Execute'&& data.popupFrom=='CrmdatarefreshComponent'">
+    <div class="header dailog-header">
+
+    </div>
+    <mat-dialog-content class="text-center">
+        <h5>{{data.message}}</h5>
+        <p>{{data.title}}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button mat-dialog-close>{{data.cancelText}}</button>
+        <button mat-raised-button color="primary" (click)="crmOut()">{{data.confirmText}}</button>
+    </mat-dialog-actions>
+</div>
+
+<!-- delete admin user list  -->
+<div *ngIf="data.dialogtype == 'Delete'&& data.popupFrom=='CrmdatarefreshComponent'">
+    <div class="header dailog-header">
+    </div>
+    <mat-dialog-content class="text-center">
+        <h5>{{data.message}}</h5>
+        <p>{{data.title}}</p>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="mt-2">
+        <button mat-raised-button mat-dialog-close>{{data.cancelText}}</button>
+        <button mat-raised-button color="primary" (click)="crmOut()">{{data.confirmText}}</button>
+    </mat-dialog-actions>
+</div>
+
+
+<!-- new feature menu  -->
+<div *ngIf="data.dialogtype == 'New'&& data.popupFrom=='newFeatureMenu'">
+    <div class="header dailog-header">
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <form>
+    <mat-dialog-content >
+        
+        <div class="form-group my-3">
+            <label>Feature Menu Name</label>
+            <input class="form-control" formControlName="featureMenu" type="text" placeholder="Feature Menu Name" />
+        </div>
+        <div class="form-group mt-4 d-flex align-items-center">
+            <label class="mr-3">Status Enable </label>
+            <mat-checkbox class="example-margin" formControlName="EnableMenu">
+             
+            </mat-checkbox>
+        </div>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mt-2">
+        <button mat-raised-button mat-dialog-close>{{data.cancelText}}</button>
+        <button mat-raised-button color="primary" >{{data.confirmText}}</button>
+    </mat-dialog-actions>
+    </form>
+</div>

@@ -1,0 +1,31 @@
+<mat-toolbar class="toolbarheader">
+  <h4>Client User List</h4>
+  <ng-select class="dropdownselect" placeholder=' Select Client Name ' (change)="selectionChanged($event)" required (clear)="clear()" >
+    <ng-option *ngFor="let client of dropdownOptions"
+      [value]="client"> {{client.clientId}}-{{client.clientName}}</ng-option>
+    </ng-select>
+  <span class="spacer"></span>
+  <button   mat-raised-button color="primary" (click)="Opendailogbox('New','ClientuserlistComponent')">New Client User</button>
+  
+  <app-data-table-filter 
+  [tableData]="dataForFiter" 
+  (filteredData)=tableFilterRec($event) 
+  [completed]="isCompleted"
+  ></app-data-table-filter>
+ </mat-toolbar>
+
+
+ <div class="container-fluid mt-3 mb-5 position-relative">
+    <app-data-table 
+    [tableData]    = "dataForTable"
+    [columnHeader] = "columnHeader"
+    (isUpdated)    =  dataTableRec($event)
+  ></app-data-table>
+  <div *ngIf="this.noRecordsFound" class="norecordsfound">
+    <mat-icon class="text-danger">warning</mat-icon>No Record Found
+  </div>
+</div>
+
+<app-progress-spinner class="spinner-position" [mode]="ProgressSpinnermode" *ngIf="this.displayProgressSpinner"></app-progress-spinner>
+
+<app-custom-notification [Notification]="Notification"></app-custom-notification>
